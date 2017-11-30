@@ -1,0 +1,13 @@
+{
+	"irc": {
+		"host": "irc.freenode.net",
+		"nick": "tgircbot",
+		"channel": "#tgircbot",
+		"port": 6667,
+		"ssl": false
+	},
+	"tg": {
+		"chatId": 0,
+		"token": "XXX"
+	}
+}

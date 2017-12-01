@@ -1,7 +1,6 @@
 'use strict';
 
 const TelegramBot = require('node-telegram-bot-api');
-const util = require('./util');
 
 var gChatId = null;
 var bot = null;
@@ -17,7 +16,7 @@ function bridgeMessage (name, text) {
   } else {
     console.error('Global chat_id not yet known');
   }
-};
+}
 
 function launch (endpoint, config) {
   const token = config.tg.token;
@@ -53,11 +52,11 @@ function launch (endpoint, config) {
     }
     console.log(msg);
     endpoint.bridgeMessage(name, msg.text);
-    endpoint.onReconnect = function() {
+    endpoint.onReconnect = function () {
       bot = null;
       launch(endpoint);
-    }
+    };
     // bot.sendPhoto(chatId, 'cats.png', {caption: 'Lovely kittens'});
   });
   return bot;
-};
+}

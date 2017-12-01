@@ -9,6 +9,9 @@
 		"node-telegram-bot-api": "0.21.1",
 		"optimist": "0.6.1"
 	},
+	"devDependencies": {
+		"semistandard": "*"
+	},
 	"optionalDependencies": {
 		"jscs": "*",
 		"js-beautify": "*",
@@ -16,6 +19,7 @@
 	},
 	"scripts": {
 		"indent": "node_modules/.bin/semistandard --fix *.js",
+		"test": "node_modules/.bin/semistandard *.js",
 		"verify": "node_modules/.bin/jscs -x -r inline *.js",
 		"start": "node index.js"
 	}

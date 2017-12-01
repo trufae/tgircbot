@@ -43,13 +43,13 @@ module.exports.bind = function (endpoint) {
   print(Chi, '[=>] Initializing r2 core...', Cend);
 
   function startIrcBot (OPT) {
-    const configFile = OPT.config || './config.json');
+    const configFile = OPT.config || './config.json';
     const config = require(configFile);
 
     /* parse commandline options */
     var nick = OPT.nick || config.irc.nick || 'r2tg';
     channel = OPT.channel || config.irc.channel || '#radare';
-    var host = OPT.host || || config.irc.host || 'irc.freenode.net';
+    var host = OPT.host || config.irc.host || 'irc.freenode.net';
     var port = OPT.port || config.irc.host || 6667;
     if (channel[0] !== '#') {
       channel = '#' + channel;

@@ -12,6 +12,10 @@
   "devDependencies": {
     "semistandard": "^11.0.0"
   },
+  "author": {
+    "name": "pancake",
+    "email": "pancake@nopcode.org"
+  },
   "bin": {
     "tgircbot": "index.js"
   },

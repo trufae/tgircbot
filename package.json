@@ -1,26 +1,24 @@
 {
-	"name": "r2pipe-ircbot",
-	"version": "0.1.0",
-	"license": "MIT",
-	"repository": "https://github.com/radare/radare2-r2pipe",
-	"description": "irc to telegram bot",
-	"dependencies": {
-		"irc.js": "github:trufae/node-irc#patch-1",
-		"node-telegram-bot-api": "0.21.1",
-		"optimist": "0.6.1"
-	},
-	"devDependencies": {
-		"semistandard": "*"
-	},
-	"optionalDependencies": {
-		"jscs": "*",
-		"js-beautify": "*",
-		"semistandard": "*"
-	},
-	"scripts": {
-		"indent": "node_modules/.bin/semistandard --fix *.js",
-		"test": "node_modules/.bin/semistandard *.js",
-		"verify": "node_modules/.bin/jscs -x -r inline *.js",
-		"start": "node index.js"
-	}
+  "name": "tgircbot",
+  "version": "0.2.0",
+  "license": "MIT",
+  "repository": "https://github.com/radare/radare2-r2pipe",
+  "description": "irc to telegram bot",
+  "dependencies": {
+    "irc.js": "github:trufae/node-irc#patch-1",
+    "node-telegram-bot-api": "0.29.1",
+    "optimist": "0.6.1"
+  },
+  "devDependencies": {
+    "semistandard": "^11.0.0"
+  },
+  "bin": {
+    "tgircbot": "index.js"
+  },
+  "scripts": {
+    "indent": "node_modules/.bin/semistandard --fix *.js",
+    "test": "node_modules/.bin/semistandard *.js",
+    "verify": "node_modules/.bin/jscs -x -r inline *.js",
+    "start": "node index.js"
+  }
 }

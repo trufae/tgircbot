@@ -2,6 +2,7 @@
 	"irc": {
 		"host": "irc.freenode.net",
 		"nick": "tgircbot",
+		"name": "custom-name",
 		"channel": "#tgircbot",
 		"port": 6667,
 		"ssl": false

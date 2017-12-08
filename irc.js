@@ -46,7 +46,7 @@ module.exports.bind = function (endpoint) {
 
   function startIrcBot (OPT) {
     if (OPT.help || OPT.h) {
-      print('r2tgirc.js [--ssl] [--host host] [--port port] [--config config.json] [--realname name]');
+      print('r2tgirc.js [--ssl] [--host host] [--port port] [--config config.json] [--name name]');
       print('    [--nick nick] [-ssl] [--channel chan] [--group tggrpid] [--owner nick]');
 /*
   console.error(`Usage: tgircbot [options]
@@ -72,7 +72,7 @@ module.exports.bind = function (endpoint) {
     channel = OPT.channel || config.irc.channel || '#radare';
     var host = OPT.host || config.irc.host || 'irc.freenode.net';
     var port = OPT.port || config.irc.port || 6667;
-    var realName = OPT.realname || config.irc.realname || 'bridge-irc-telegram';
+    var realName = OPT.name || config.irc.name || 'bridge-irc-telegram';
     if (channel[0] !== '#') {
       channel = '#' + channel;
     }

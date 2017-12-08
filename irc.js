@@ -1,7 +1,11 @@
 'use strict';
 
 /* IRC */
+const path = require('path');
 const IRC = require('irc.js');
+// const IRC = require('./IRCJS');
+const fs = require('fs');
+
 var irc = null;
 var channel = null;
 
@@ -10,6 +14,7 @@ module.exports.bridgeMessage = function (name, text) {
     console.error('irc instance not yet defined');
     return false;
   }
+  console.error('bridgemsg', text);
   var lines = text.replace('@r2tgircBot', '').split('\n');
   var count = 10;
   const who = '<' + name + '> ';
@@ -39,28 +44,39 @@ module.exports.bind = function (endpoint) {
   process.on('SIGINT', finalize);
   process.on('SIGTERM', finalize);
 
-  /* r2 stuff */
-  print(Chi, '[=>] Initializing r2 core...', Cend);
-
   function startIrcBot (OPT) {
-    const configFile = OPT.config || './config.json';
-    const config = require(configFile);
+    if (OPT.help || OPT.h) {
+      print('r2tgirc.js [--ssl] [--host host] [--port port] [--config config.json]');
+      print('    [--nick nick] [-ssl] [--channel chan] [--group tggrpid] [--owner nick]');
+/*
+  console.error(`Usage: tgircbot [options]
+  --nick [r2tg]              change nickname
+  --channel [#radare]        specify different IRC channel
+  --host [irc.freenode.net]  host to connect
+  --port [6667]              specify tcp port of the irc server
+  --ssl                      use SSL to connect to the IRC
+`);
+*/
+      process.exit(0);
+    }
+    const configFile = OPT.config || OPT.c || './config.json';
+    const absConfigFile = path.resolve(configFile);
+    if (!fs.existsSync(absConfigFile)) {
+      console.error('Cannot find', configFile);
+      process.exit(1);
+    }
+    const config = require(absConfigFile);
 
     /* parse commandline options */
     var nick = OPT.nick || config.irc.nick || 'r2tg';
     channel = OPT.channel || config.irc.channel || '#radare';
     var host = OPT.host || config.irc.host || 'irc.freenode.net';
-    var port = OPT.port || config.irc.host || 6667;
+    var port = OPT.port || config.irc.port || 6667;
     if (channel[0] !== '#') {
       channel = '#' + channel;
     }
 
-    if (OPT.help || OPT.h) {
-      print('r2tgirc.js [--ssl] [--host host] [--port port] [--config config.json]');
-      print('    [--nick nick] [--channel chan] [--group tggrpid] [--owner nick]');
-      process.exit(0);
-    }
-
+    // LOL NO
     if (OPT.ssl) {
       // LOL. irc.js ssl support is broken, so i'm workarounding this with a socat pipe
       const sslport = 9000 + (100 * Math.random());
@@ -79,17 +95,21 @@ module.exports.bind = function (endpoint) {
 
     /* connect to irc */
     print(Chi, '[=>] Connecting to irc ', Cend);
-    print(Chi, '     HOST: ', host, ':', port, Cend);
-    print(Chi, '     NICK: ', nick, ' ', channel, Cend);
+    print(Chi, '     HOST: ', host, Cend);
+    print(Chi, '     PORT: ', port, Cend);
+    print(Chi, '     NICK: ', nick, Cend);
+    print(Chi, '     CHAN: ', channel, Cend);
 
     irc = new IRC(host, port);
 
     irc.on('disconnected', function (data) {
-      print('Disconnected from the IRC');
-      irc.connect(nick, 'radare-telegram-irc-bridge');
-      if (endpoint.onReconnect) {
-        endpoint.onReconnect();
-      }
+      print('Disconnected from the IRC. Reconnecting in 5s');
+      setTimeout(() => {
+        irc.connect(nick, 'radare-telegram-irc-bridge');
+        if (endpoint.onReconnect) {
+          endpoint.onReconnect();
+        }
+      }, 3000);
       // reconnect in telegram too
     });
 

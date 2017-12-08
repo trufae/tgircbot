@@ -21,6 +21,10 @@ function bridgeMessage (name, text) {
 function launch (endpoint, config) {
   const token = config.tg.token;
 
+  if (config && config.tg && config.tg.chatId) {
+    gChatId = config.tg.chatId;
+    console.error('[tg] Using', gChatId, 'as Telegram channel identifier');
+  }
   /* Telegram Bot Side */
   if (bot !== null) {
     return;

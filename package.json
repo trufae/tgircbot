@@ -6,8 +6,8 @@
   "description": "irc to telegram bot",
   "dependencies": {
     "irc.js": "github:trufae/node-irc#patch-1",
-    "node-telegram-bot-api": "0.29.1",
-    "optimist": "0.6.1"
+    "node-telegram-bot-api": "^0.29.0",
+    "optimist": "^0.6.1"
   },
   "devDependencies": {
     "semistandard": "^11.0.0"

@@ -119,12 +119,22 @@ module.exports.bind = function (endpoint) {
     });
     irc.on('connected', function (s) {
       irc.nick(nick);
-      irc.join(channel, function (x) {
-        irc.privmsg(channel, 'hi');
-        if (endpoint && endpoint.launch) {
-          endpoint.launch(module.exports, config);
-        }
-      });
+      function connected() {
+        irc.join(channel, function (x) {
+          irc.privmsg(channel, 'hi');
+          if (endpoint && endpoint.launch) {
+            endpoint.launch(module.exports, config);
+          }
+        });
+      }
+      if (config.irc.nickserv) {
+        setTimeout(function() {
+          irc.privmsg('nickserv', 'identify ' + nick + ' ' + config.irc.nickserv);
+          setTimeout(connected, 4000);
+        }, 4000);
+      } else {
+        connected();
+      }
       print('connected');
     });
 

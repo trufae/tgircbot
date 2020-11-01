@@ -74,6 +74,8 @@ module.exports.bind = function (endpoint) {
     var port = OPT.port || config.irc.port || 6667;
     var realName = OPT.name || config.irc.name || 'bridge-irc-telegram';
     if (channel[0] !== '#') {
+      console.log('ignore privmsg');
+      return;
       channel = '#' + channel;
     }
 

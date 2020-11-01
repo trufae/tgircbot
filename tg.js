@@ -27,7 +27,7 @@ function launch (endpoint, config) {
   }
   /* Telegram Bot Side */
   if (bot !== null) {
-    return;
+    return bot;
   }
   bot = new TelegramBot(token, {
     polling: true
@@ -40,6 +40,10 @@ function launch (endpoint, config) {
     var chatId = msg.chat.id;
     if (!gChatId && chatId) {
       gChatId = chatId;
+    }
+    if (msg.chat.id != gChatId) {
+      // ignore message
+      return;
     }
     console.log(gChatId, chatId);
     // bot.sendMessage(chatId, 'hello world');
